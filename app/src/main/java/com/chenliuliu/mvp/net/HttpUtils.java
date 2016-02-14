@@ -16,6 +16,8 @@ import okhttp3.Call;
  */
 public class HttpUtils<T> {
 
+    private volatile static OkHttpUtils okHttpUtils;
+
     private volatile static HttpUtils instance;
 
     private HttpUtils() {
@@ -38,8 +40,8 @@ public class HttpUtils<T> {
      * @param callback 自定义回掉
      * @param mClass   回掉类型
      */
-    protected void executeGet(final String url, Map<String, String> params, final HttpUtilsCallBack<T> callback, final Class<T> mClass) {
-        OkHttpUtils.get().url(url).params(params).build().execute(new StringCallback() {
+    public void executeGet(final String url, Map<String, String> params, final HttpUtilsCallBack<T> callback, final Class<T> mClass) {
+        getHttpUtils().get().url(url).params(params).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e) {
                 if (BuildConfig.DEBUG) {
@@ -51,9 +53,9 @@ public class HttpUtils<T> {
             @Override
             public void onResponse(String response) {
                 if (BuildConfig.DEBUG) {
-                    KLog.json(response, response);
+                    KLog.json("response", response);
                 }
-                T responseObject = JsonUtils.getInstance().json2object(response, mClass);
+                T responseObject =  (T)JsonUtils.getInstance().json2object(response, mClass);
                 if (responseObject != null) {
                     callback.onSuccess(responseObject);
                 } else {
@@ -69,8 +71,8 @@ public class HttpUtils<T> {
      * @param params   form表单
      * @param callback okhttp自带的回掉
      */
-    protected void executeGet(final String url, Map<String, String> params, Callback callback) {
-        OkHttpUtils.get().url(url).params(params).build().execute(callback);
+    public void executeGet(final String url, Map<String, String> params, Callback callback) {
+        getHttpUtils().get().url(url).params(params).build().execute(callback);
     }
 
     /**
@@ -78,8 +80,8 @@ public class HttpUtils<T> {
      * @param params   form表单
      * @param callback okhttp自带的回掉
      */
-    protected void executePost(final String url, Map<String, String> params, Callback callback) {
-        OkHttpUtils.post().url(url).params(params).build().execute(callback);
+    public void executePost(final String url, Map<String, String> params, Callback callback) {
+        getHttpUtils().post().url(url).params(params).build().execute(callback);
     }
 
     /**
@@ -89,7 +91,7 @@ public class HttpUtils<T> {
      * @param mClass   回掉类型
      */
     public void executePost(final String url, Map<String, String> params, final HttpUtilsCallBack<T> callback, final Class<T> mClass) {
-        OkHttpUtils.post().url(url).params(params).build().execute(new StringCallback() {
+        getHttpUtils().post().url(url).params(params).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e) {
                 if (BuildConfig.DEBUG) {
@@ -117,8 +119,26 @@ public class HttpUtils<T> {
     /**
      * @param url 根据访问地址，cancle request
      */
-    protected void cancle(String url) {
-        RequestCall call = OkHttpUtils.get().url(url).build();
+    public void cancleWithUrl(String url) {
+        RequestCall call = getHttpUtils().get().url(url).build();
         call.cancel();
+    }
+
+    /**
+     * @param tag 根据TAG，cancle request
+     */
+    public void cancleWithTag(String tag) {
+        getHttpUtils().cancelTag(tag);
+    }
+
+    private OkHttpUtils getHttpUtils() {
+        if (null == okHttpUtils) {
+            synchronized (HttpUtils.class) {
+                if (null == okHttpUtils) {
+                    okHttpUtils = OkHttpUtils.getInstance();
+                }
+            }
+        }
+        return okHttpUtils;
     }
 }

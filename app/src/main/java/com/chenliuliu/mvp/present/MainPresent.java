@@ -1,5 +1,7 @@
 package com.chenliuliu.mvp.present;
 
+import android.os.Handler;
+
 import com.chenliuliu.mvp.activitys.MainActivity;
 import com.chenliuliu.mvp.base.MvpPresenter;
 import com.chenliuliu.mvp.bean.Testw;
@@ -18,20 +20,25 @@ public class MainPresent implements MvpPresenter<MainActivity> {
     private MainActivity mView;
 
     public void getData() {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("SENSORID", "500004DF6A4A");
-        params.put("KEY", "v34uvm9y839vg6y23mhLSKDF84f10a");
-        HttpUtils.getInstance().executePost("http://weiguo.hanwei.cn/smart/hwmobile/smart/d002!retrieveRealData", params, new HttpUtilsCallBack<Testw>() {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onError(String str) {
+            public void run() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("SENSORID", "500004DF6A4A");
+                params.put("KEY", "v34uvm9y839vg6y23mhLSKDF84f10a");
+                HttpUtils.getInstance().executePost("http://weiguo.hanwei.cn/smart/hwmobile/smart/d002!retrieveRealData", params, new HttpUtilsCallBack<Testw>() {
+                    @Override
+                    public void onError(String str) {
 
-            }
+                    }
 
-            @Override
-            public void onSuccess(Testw reponse) {
-                mView.showMsg(reponse.getDataObject().get(0).getSensorList().get(0).getLocalHardVersion());
+                    @Override
+                    public void onSuccess(Testw reponse) {
+                        mView.showMsg(reponse.getDataObject().get(0).getSensorList().get(0).getLocalHardVersion());
+                    }
+                }, Testw.class);
             }
-        }, Testw.class);
+        }, 2000);
     }
 
     /**
