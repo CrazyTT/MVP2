@@ -7,6 +7,7 @@ import com.chenliuliu.mvp.base.MvpPresenter;
 import com.chenliuliu.mvp.bean.Testw;
 import com.chenliuliu.mvp.net.HttpUtils;
 import com.chenliuliu.mvp.net.HttpUtilsCallBack;
+import com.chenliuliu.mvp.utils.ToastUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +30,7 @@ public class MainPresent implements MvpPresenter<MainActivity> {
                 HttpUtils.getInstance().executePost("http://weiguo.hanwei.cn/smart/hwmobile/smart/d002!retrieveRealData", params, new HttpUtilsCallBack<Testw>() {
                     @Override
                     public void onError(String str) {
-
+                        ToastUtils.show(mView, str);
                     }
 
                     @Override

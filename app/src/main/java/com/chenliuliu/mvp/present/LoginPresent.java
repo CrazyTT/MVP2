@@ -1,10 +1,13 @@
 package com.chenliuliu.mvp.present;
 
+import android.util.Log;
+
 import com.chenliuliu.mvp.activitys.LoginActivity;
 import com.chenliuliu.mvp.base.MvpPresenter;
 import com.chenliuliu.mvp.bean.Testw;
 import com.chenliuliu.mvp.net.HttpUtils;
 import com.chenliuliu.mvp.net.HttpUtilsCallBack;
+import com.chenliuliu.mvp.utils.DialogUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,17 +22,20 @@ public class LoginPresent implements MvpPresenter<LoginActivity> {
      * 这里可以加入耗时操作
      */
     public void show() {
+        DialogUtils.getInstance().show(mView);
         Map<String, String> params = new HashMap<String, String>();
         params.put("SENSORID", "500004DF6A4A");
         params.put("KEY", "v34uvm9y839vg6y23mhLSKDF84f10a");
         HttpUtils.getInstance().executePost("http://weiguo.hanwei.cn/smart/hwmobile/smart/d002!retrieveRealData", params, new HttpUtilsCallBack<Testw>() {
             @Override
             public void onError(String str) {
+                DialogUtils.getInstance().dismiss();
+                Log.e("error", str);
             }
 
             @Override
             public void onSuccess(Testw object) {
-
+                DialogUtils.getInstance().dismiss();
                 mView.showMsg(object.getMessage());
             }
         }, Testw.class);
