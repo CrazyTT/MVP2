@@ -234,7 +234,8 @@ public class MyProgressDialog {
             int wrapParam = ViewGroup.LayoutParams.WRAP_CONTENT;
             ViewGroup.LayoutParams params;
             if (view instanceof SpinView) {
-                params = new ViewGroup.LayoutParams(100, 100);
+                params = new ViewGroup.LayoutParams(Helper.dpToPixel(35,mContext), Helper.dpToPixel(35,mContext)
+                );
             } else {
                 params = new ViewGroup.LayoutParams(wrapParam, wrapParam);
 

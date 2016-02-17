@@ -4,7 +4,6 @@ package com.chenliuliu.mvp.utils.mydialog;
 import android.content.Context;
 
 class Helper {
-
     private static float scale;
 
     public static int dpToPixel(float dp, Context context) {
