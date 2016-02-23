@@ -30,7 +30,7 @@ public class MainPresent implements MvpPresenter<MainActivity> {
                 HttpUtils.getInstance().executePost("http://weiguo.hanwei.cn/smart/hwmobile/smart/d002!retrieveRealData", params, new HttpUtilsCallBack<Testw>() {
                     @Override
                     public void onError(String str) {
-                        ToastUtils.show(mView, str);
+                        ToastUtils.toast(str, ToastUtils.LENGTH_SHORT);
                     }
 
                     @Override

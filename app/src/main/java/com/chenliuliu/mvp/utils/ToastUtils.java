@@ -1,116 +1,49 @@
 package com.chenliuliu.mvp.utils;
 
-import android.app.Activity;
-import android.content.Context;
-import android.text.TextUtils;
-import android.view.View;
+import android.os.Handler;
 import android.widget.Toast;
+import com.chenliuliu.mvp.app.MyApplication;
 
-/**
- * Created by liuliuchen on 16/2/16.
- */
-public final class ToastUtils {
-    public static int CONSTANT_DURA = Toast.LENGTH_SHORT;
 
-    /**
-     * Find text from resourse and show into toast message
-     *
-     * @param activity          {@link Activity} used to create the {@link Toast} message
-     * @param messageResourceId The resource containing the message to be displayed
-     */
-    public static void show(final Activity activity, final int messageResourceId) {
-        ToastUtils.show(activity, messageResourceId, ToastUtils.CONSTANT_DURA);
-    }
+public class ToastUtils {
 
-    /**
-     * Find text from resourse and show into toast message with custome time
-     *
-     * @param activity          {@link Activity} used to create the {@link Toast} message
-     * @param messageResourceId The resource containing the message to be displayed
-     * @param duration          How long to display the message. Either
-     *                          {@link Toast#LENGTH_SHORT} or {@link Toast#LENGTH_LONG}
-     */
-    public static void show(final Activity activity,
-                            final int messageResourceId, final int duration) {
-        ToastUtils.showToast(activity, activity.getString(messageResourceId),
-                null, duration);
-    }
+    public static final int LENGTH_SHORT = android.widget.Toast.LENGTH_SHORT;
+    public static final int LENGTH_LONG = android.widget.Toast.LENGTH_LONG;
 
-    /**
-     * Toast directly pass string to file to an argument
-     *
-     * @param activity {@link Activity} used to create the {@link Toast} message
-     * @param message  The message to be displayed
-     */
-    public static void show(final Activity activity, final String message) {
-        ToastUtils.show(activity, message, ToastUtils.CONSTANT_DURA);
-    }
+    private static android.widget.Toast toast;
+    private static Handler handler = new Handler();
 
-    /**
-     * Toast directly pass string to file to an argument with custom
-     * {@link Toast} message
-     *
-     * @param activity {@link Activity} used to create the {@link Toast} message
-     * @param message  The message to be displayed
-     * @param duration How long to display the message. Either
-     *                 {@link Toast#LENGTH_SHORT} or {@link Toast#LENGTH_LONG}
-     */
-    public static void show(final Activity activity, final String message,
-                            final int duration) {
-        ToastUtils.showToast(activity, message, null, duration);
-    }
-
-    /**
-     * Make a standard toast that displays a {@link View}.
-     *
-     * @param activity {@link Activity} used to create the {@link Toast} message
-     * @param view     The {@link View} to show
-     */
-    public static void show(final Activity activity, final View view) {
-        ToastUtils.show(activity, view, ToastUtils.CONSTANT_DURA);
-    }
-
-    /**
-     * Make a standard toast that displays a {@link View}.
-     *
-     * @param activity {@link Activity} used to create the {@link Toast} message
-     * @param view     The {@link View} to show
-     * @param duration How long to display the message. Either
-     *                 {@link Toast#LENGTH_SHORT} or {@link Toast#LENGTH_LONG}
-     */
-    public static void show(final Activity activity, final View view,
-                            final int duration) {
-        ToastUtils.showToast(activity, null, view, duration);
-    }
-
-    /**
-     * @param activity {@link Activity} used to create the {@link Toast} message.
-     * @param message  The message to be displayed.
-     * @param view     The {@link View} to be displayed.
-     * @param duration How long to display the message. Either
-     *                 {@link Toast#LENGTH_SHORT} or {@link Toast#LENGTH_LONG}.
-     */
-    private static void showToast(final Activity activity,
-                                  final String message, final View view, final int duration) {
-        if (activity == null) {
-            return;
+    private static Runnable run = new Runnable() {
+        public void run() {
+            toast.cancel();
         }
-        if (TextUtils.isEmpty(message) && view == null) {
-            return;
+    };
+
+    /**
+     * <p/>
+     *
+     * @param msg
+     * @param duration
+     * @author chenliuliu, 2014-9-15
+     */
+    public static void toast(CharSequence msg, int duration) {
+        handler.removeCallbacks(run);
+        switch (duration) {
+            case LENGTH_SHORT:
+                duration = Toast.LENGTH_SHORT;
+                break;
+            case LENGTH_LONG:
+                duration = Toast.LENGTH_LONG;
+                break;
+            default:
+                break;
         }
-
-        final Context context = activity.getApplicationContext();
-
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                final Toast toast = Toast.makeText(context, message, duration);
-
-                if (view != null) {
-                    toast.setView(view);
-                }
-                toast.show();
-            }
-        });
+        if (null != toast) {
+            toast.setText(msg);
+        } else {
+            toast = android.widget.Toast.makeText(MyApplication.getInstance(), msg, duration);
+        }
+        handler.postDelayed(run, duration);
+        toast.show();
     }
 }

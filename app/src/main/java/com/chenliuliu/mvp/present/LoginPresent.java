@@ -7,6 +7,7 @@ import com.chenliuliu.mvp.bean.Weather;
 import com.chenliuliu.mvp.net.HttpUtils;
 import com.chenliuliu.mvp.net.HttpUtilsCallBack;
 import com.chenliuliu.mvp.utils.DialogUtils;
+import com.chenliuliu.mvp.utils.ToastUtils;
 
 /**
  * Created by liuliuchen on 16/2/10.
@@ -22,6 +23,7 @@ public class LoginPresent implements MvpPresenter<LoginActivity> {
         HttpUtils.getInstance().executeGet("http://apicloud.mob.com/v1/weather/query?key=f8090cf6478b&city=无锡", null, new HttpUtilsCallBack<Weather>() {
             @Override
             public void onError(String str) {
+                ToastUtils.toast(str, ToastUtils.LENGTH_SHORT);
                 DialogUtils.getInstance().dismiss();
                 Log.e("error", str);
             }
