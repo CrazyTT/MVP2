@@ -13,4 +13,5 @@ public class FragmentOne extends MvpFragment<FragmentOnePresent> implements MvpV
     protected FragmentOnePresent createPresenter() {
         return new FragmentOnePresent();
     }
+
 }

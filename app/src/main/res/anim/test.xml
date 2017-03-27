@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<alpha-->
+    <!--android:duration="3000"-->
+    <!--android:fillAfter="true"-->
+    <!--android:fromAlpha="1.0"-->
+    <!--android:toAlpha="0.1"/>-->
+    <!--<scale-->
+    <!--android:duration="500"-->
+    <!--android:fromXScale="0"-->
+    <!--android:fromYScale="0"-->
+    <!--android:pivotX="50%"-->
+    <!--android:pivotY="50%"-->
+    <!--android:toXScale="1.0"-->
+    <!--android:toYScale="1.0"-->
+    <!--/>-->
+    <!--<translate-->
+    <!--android:duration="3600"-->
+    <!--android:fillAfter="true"-->
+    <!--android:fromXDelta="0"-->
+    <!--android:fromYDelta="0"-->
+    <!--android:interpolator="@android:anim/accelerate_decelerate_interpolator"-->
+    <!--android:toXDelta="260"-->
+    <!--android:toYDelta="600"/>-->
+    <rotate
+        android:duration="3000"
+        android:fromDegrees="0"
+        android:interpolator="@android:anim/accelerate_decelerate_interpolator"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:toDegrees="+350"/>
+
+</set>

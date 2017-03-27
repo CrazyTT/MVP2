@@ -15,6 +15,11 @@ public class MyApplication extends Application {
 
     @Override
     public void onCreate() {
+        //https信任证书
+//        HttpUtils.getInstance().getHttpUtils().setCertificates(new InputStream[]{
+//                new Buffer()
+//                        .writeUtf8("")
+//                        .inputStream()});
         super.onCreate();
     }
 

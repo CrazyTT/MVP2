@@ -6,38 +6,8 @@ import java.util.List;
  * Created by liuliuchen on 16/2/17.
  */
 public class Weather {
-
-
-    /**
-     * msg : success
-     * result : [{"airCondition":"轻度污染","city":"南通","coldIndex":"易发期","date":"2016-02-17","distrct":"启东","dressingIndex":"毛衣类","exerciseIndex":"不适宜","future":[{"date":"2016-02-18","dayTime":"多云","night":"多云","temperature":"14°C / 3°C","week":"星期四","wind":"南风 3～4级"},{"date":"2016-02-19","dayTime":"阴","night":"多云","temperature":"13°C / 3°C","week":"星期五","wind":"东风 3～4级"},{"date":"2016-02-20","dayTime":"多云","night":"晴","temperature":"9°C / -1°C","week":"星期六","wind":"北风 3～4级"},{"date":"2016-02-21","dayTime":"多云","night":"多云","temperature":"8°C / -1°C","week":"星期日","wind":"东北风 小于3级"},{"date":"2016-02-22","dayTime":"雨","night":"阵雨","temperature":"7°C / 3°C","week":"星期一","wind":"东风 3级"},{"date":"2016-02-23","dayTime":"局部多云","night":"多云","temperature":"8°C / 2°C","week":"星期二","wind":"东北偏北风 4级"},{"date":"2016-02-24","dayTime":"局部多云","night":"局部多云","temperature":"7°C / 2°C","week":"星期三","wind":"东北偏北风 4级"},{"date":"2016-02-25","dayTime":"阴天","night":"局部多云","temperature":"8°C / 2°C","week":"星期四","wind":"东北偏东风 3级"},{"date":"2016-02-26","dayTime":"局部多云","night":"局部多云","temperature":"8°C / 1°C","week":"星期五","wind":"东北偏北风 3级"}],"humidity":"湿度：30%","pollutionIndex":"112","province":"江苏","sunrise":"06:37","sunset":"17:43","temperature":"10℃","time":"16:12","updateTime":"20160217162400","washIndex":"不适宜","weather":"晴","week":"周三","wind":"无持续风向微风"}]
-     * retCode : 200
-     */
-
     private String msg;
     private String retCode;
-    /**
-     * airCondition : 轻度污染
-     * city : 南通
-     * coldIndex : 易发期
-     * date : 2016-02-17
-     * distrct : 启东
-     * dressingIndex : 毛衣类
-     * exerciseIndex : 不适宜
-     * future : [{"date":"2016-02-18","dayTime":"多云","night":"多云","temperature":"14°C / 3°C","week":"星期四","wind":"南风 3～4级"},{"date":"2016-02-19","dayTime":"阴","night":"多云","temperature":"13°C / 3°C","week":"星期五","wind":"东风 3～4级"},{"date":"2016-02-20","dayTime":"多云","night":"晴","temperature":"9°C / -1°C","week":"星期六","wind":"北风 3～4级"},{"date":"2016-02-21","dayTime":"多云","night":"多云","temperature":"8°C / -1°C","week":"星期日","wind":"东北风 小于3级"},{"date":"2016-02-22","dayTime":"雨","night":"阵雨","temperature":"7°C / 3°C","week":"星期一","wind":"东风 3级"},{"date":"2016-02-23","dayTime":"局部多云","night":"多云","temperature":"8°C / 2°C","week":"星期二","wind":"东北偏北风 4级"},{"date":"2016-02-24","dayTime":"局部多云","night":"局部多云","temperature":"7°C / 2°C","week":"星期三","wind":"东北偏北风 4级"},{"date":"2016-02-25","dayTime":"阴天","night":"局部多云","temperature":"8°C / 2°C","week":"星期四","wind":"东北偏东风 3级"},{"date":"2016-02-26","dayTime":"局部多云","night":"局部多云","temperature":"8°C / 1°C","week":"星期五","wind":"东北偏北风 3级"}]
-     * humidity : 湿度：30%
-     * pollutionIndex : 112
-     * province : 江苏
-     * sunrise : 06:37
-     * sunset : 17:43
-     * temperature : 10℃
-     * time : 16:12
-     * updateTime : 20160217162400
-     * washIndex : 不适宜
-     * weather : 晴
-     * week : 周三
-     * wind : 无持续风向微风
-     */
 
     private List<ResultEntity> result;
 
@@ -85,14 +55,6 @@ public class Weather {
         private String weather;
         private String week;
         private String wind;
-        /**
-         * date : 2016-02-18
-         * dayTime : 多云
-         * night : 多云
-         * temperature : 14°C / 3°C
-         * week : 星期四
-         * wind : 南风 3～4级
-         */
 
         private List<FutureEntity> future;
 

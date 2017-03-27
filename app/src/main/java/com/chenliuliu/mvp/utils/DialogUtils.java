@@ -24,7 +24,8 @@ public class DialogUtils {
         return instance;
     }
 
-    public void show(Context context) { myProgressDialog = MyProgressDialog.create(context).setCancellable(false).setCanceledOnTouchOutside(false)
+    public void show(Context context) {
+        myProgressDialog = MyProgressDialog.create(context).setCancellable(false).setCanceledOnTouchOutside(false)
                 .setStyle(MyProgressDialog.Style.SPIN_INDETERMINATE);
         myProgressDialog.show();
     }
@@ -36,7 +37,10 @@ public class DialogUtils {
     }
 
     public void dismiss() {
-        myProgressDialog.dismiss();
+        if (myProgressDialog != null && myProgressDialog.isShowing()) {
+            myProgressDialog.dismiss();
+        }
+        myProgressDialog = null;
     }
 
 }

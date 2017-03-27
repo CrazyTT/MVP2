@@ -1,6 +1,9 @@
 package com.chenliuliu.mvp.net;
 
+import android.content.Context;
+
 import com.chenliuliu.mvp.BuildConfig;
+import com.chenliuliu.mvp.utils.DialogUtils;
 import com.socks.library.KLog;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.Callback;
@@ -35,12 +38,14 @@ public class HttpUtils<T> {
     }
 
     /**
+     * @param view
      * @param url      地址
      * @param params   form表单
      * @param callback 自定义回掉
      * @param mClass   回掉类型
      */
-    public void executeGet(final String url, Map<String, String> params, final HttpUtilsCallBack<T> callback, final Class<T> mClass) {
+    public void executeGet(Context view, final String url, Map<String, String> params, final HttpUtilsCallBack<T> callback, final Class<T> mClass) {
+        DialogUtils.getInstance().show(view);
         getHttpUtils().get().url(url).params(params).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e) {
@@ -48,6 +53,7 @@ public class HttpUtils<T> {
                     KLog.e(e.getMessage());
                 }
                 callback.onError("网络错误");
+                DialogUtils.getInstance().dismiss();
             }
 
             @Override
@@ -55,12 +61,13 @@ public class HttpUtils<T> {
                 if (BuildConfig.DEBUG) {
                     KLog.json("response", response);
                 }
-                T responseObject =  (T)JsonUtils.getInstance().json2object(response, mClass);
+                T responseObject = (T) JsonUtils.getInstance().json2object(response, mClass);
                 if (responseObject != null) {
                     callback.onSuccess(responseObject);
                 } else {
                     callback.onError("网络错误");
                 }
+                DialogUtils.getInstance().dismiss();
             }
         });
     }
@@ -90,7 +97,8 @@ public class HttpUtils<T> {
      * @param callback 自定义回掉
      * @param mClass   回掉类型
      */
-    public void executePost(final String url, Map<String, String> params, final HttpUtilsCallBack<T> callback, final Class<T> mClass) {
+    public void executePost(Context view, final String url, Map<String, String> params, final HttpUtilsCallBack<T> callback, final Class<T> mClass) {
+        DialogUtils.getInstance().show(view);
         getHttpUtils().post().url(url).params(params).build().execute(new StringCallback() {
             @Override
             public void onError(Call call, Exception e) {
@@ -98,6 +106,7 @@ public class HttpUtils<T> {
                     KLog.e(e.getMessage());
                 }
                 callback.onError("网络错误");
+                DialogUtils.getInstance().dismiss();
             }
 
             @Override
@@ -111,6 +120,7 @@ public class HttpUtils<T> {
                 } else {
                     callback.onError("网络错误");
                 }
+                DialogUtils.getInstance().dismiss();
             }
         });
     }
@@ -131,7 +141,7 @@ public class HttpUtils<T> {
         getHttpUtils().cancelTag(tag);
     }
 
-    private OkHttpUtils getHttpUtils() {
+    public OkHttpUtils getHttpUtils() {
         if (null == okHttpUtils) {
             synchronized (HttpUtils.class) {
                 if (null == okHttpUtils) {
